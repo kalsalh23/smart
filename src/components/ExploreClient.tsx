@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
+import Icon from "./Icon";
 import { CATEGORIES, type Product } from "@/lib/types";
 
 interface Props {
@@ -51,20 +52,21 @@ export default function ExploreClient({ products, brands, initialQ, initialCat }
   return (
     <div>
       {/* Search */}
-      <div className="flex items-center gap-2 rounded-full border border-brand-100 bg-white px-4 py-3 shadow-card">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="h-5 w-5 shrink-0 text-ink-faint">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.5-3.5" />
-        </svg>
+      <div className="flex items-center gap-2.5 rounded-full border border-ink/10 bg-white px-4 py-3.5 shadow-card">
+        <Icon name="search" className="h-[18px] w-[18px] shrink-0 text-ink-faint" />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="ابحثي عن عطر أو ماركة..."
-          className="w-full bg-transparent text-sm font-semibold outline-none placeholder:text-ink-faint"
+          className="w-full bg-transparent text-sm font-medium outline-none placeholder:text-ink-faint"
         />
         {q && (
-          <button onClick={() => setQ("")} aria-label="مسح" className="text-ink-faint hover:text-ink">
-            ✕
+          <button
+            onClick={() => setQ("")}
+            aria-label="مسح"
+            className="text-ink-faint transition hover:text-ink"
+          >
+            <Icon name="x" className="h-4 w-4" strokeWidth={1.8} />
           </button>
         )}
       </div>
@@ -75,10 +77,10 @@ export default function ExploreClient({ products, brands, initialQ, initialCat }
           <button
             key={c.key}
             onClick={() => setCat(c.key)}
-            className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold transition ${
+            className={`shrink-0 rounded-full px-4 py-2 text-[13px] font-bold transition ${
               cat === c.key
-                ? "bg-brand-600 text-white shadow-soft"
-                : "border border-brand-100 bg-white text-ink-soft hover:border-brand-300"
+                ? "bg-ink text-white shadow-soft"
+                : "border border-ink/10 bg-white text-ink-soft hover:border-plum hover:text-plum"
             }`}
           >
             {c.label}
@@ -92,8 +94,8 @@ export default function ExploreClient({ products, brands, initialQ, initialCat }
           onClick={() => setBrand("all")}
           className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-bold transition ${
             brand === "all"
-              ? "bg-ink text-white"
-              : "border border-brand-100 bg-white text-ink-faint hover:border-brand-300"
+              ? "bg-plum text-white"
+              : "border border-ink/10 bg-white text-ink-faint hover:border-plum hover:text-plum"
           }`}
         >
           كل الماركات
@@ -102,10 +104,10 @@ export default function ExploreClient({ products, brands, initialQ, initialCat }
           <button
             key={b}
             onClick={() => setBrand(b)}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 font-display text-xs font-semibold tracking-wide transition ${
+            className={`shrink-0 rounded-full border px-3.5 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.12em] transition ${
               brand === b
-                ? "bg-ink text-white"
-                : "border border-brand-100 bg-white text-ink-faint hover:border-brand-300"
+                ? "bg-plum text-white"
+                : "border-ink/10 bg-white text-ink-faint hover:border-plum hover:text-plum"
             }`}
           >
             {b}
@@ -114,14 +116,14 @@ export default function ExploreClient({ products, brands, initialQ, initialCat }
       </div>
 
       {/* Sort + count */}
-      <div className="mt-5 flex items-center justify-between">
-        <p className="text-sm font-bold text-ink-soft">
+      <div className="mt-6 flex items-center justify-between">
+        <p className="text-[13px] font-bold text-ink-soft">
           {filtered.length} عطر متوفر
         </p>
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
-          className="rounded-full border border-brand-100 bg-white px-3 py-2 text-xs font-bold text-ink-soft outline-none"
+          className="rounded-full border border-ink/10 bg-white px-4 py-2 text-xs font-bold text-ink-soft outline-none focus:border-brand-300"
         >
           <option value="featured">الأكثر رواجاً</option>
           <option value="price-asc">السعر: الأقل أولاً</option>
@@ -132,15 +134,17 @@ export default function ExploreClient({ products, brands, initialQ, initialCat }
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="mt-16 text-center">
-          <p className="text-4xl">🔍</p>
-          <p className="mt-3 font-bold">لا توجد نتائج مطابقة</p>
-          <p className="mt-1 text-sm text-ink-faint">
+        <div className="mt-16 flex flex-col items-center text-center">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-ink/10 bg-white text-ink-faint shadow-card">
+            <Icon name="search" className="h-6 w-6" />
+          </span>
+          <p className="mt-4 font-display-ar text-xl font-bold">لا توجد نتائج مطابقة</p>
+          <p className="mt-1.5 text-[13px] text-ink-faint">
             جرّبي كلمة بحث مختلفة أو غيّري الفلاتر
           </p>
         </div>
       ) : (
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-5">
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4">
           {filtered.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}

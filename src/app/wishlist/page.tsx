@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useStore } from "@/components/StoreContext";
+import Icon from "@/components/Icon";
 import { formatPrice } from "@/lib/format";
 
 export default function WishlistPage() {
@@ -10,18 +11,18 @@ export default function WishlistPage() {
   if (wishlist.length === 0) {
     return (
       <div className="mx-auto flex max-w-md flex-col items-center px-4 py-20 text-center">
-        <span className="flex h-24 w-24 items-center justify-center rounded-full bg-blush text-4xl">
-          💜
+        <span className="flex h-20 w-20 items-center justify-center rounded-full border border-ink/10 bg-white text-rose-500 shadow-card">
+          <Icon name="heart" className="h-8 w-8" strokeWidth={1.3} />
         </span>
-        <h1 className="mt-5 text-xl font-extrabold">قائمة المفضلة فارغة</h1>
-        <p className="mt-2 text-sm leading-7 text-ink-faint">
-          اضغط على أيقونة القلب في أي عطر لحفظه هنا
+        <h1 className="mt-6 font-display-ar text-2xl font-bold">قائمة المفضلة فارغة</h1>
+        <p className="mt-2 text-[13px] leading-7 text-ink-faint">
+          اضغطي على أيقونة القلب في أي عطر لحفظه هنا
         </p>
         <Link
           href="/explore"
-          className="mt-6 rounded-full bg-brand-600 px-7 py-3 text-sm font-extrabold text-white shadow-soft transition hover:bg-brand-700"
+          className="mt-7 rounded-full bg-ink px-8 py-3.5 text-[13px] font-bold text-white shadow-soft transition hover:bg-plum"
         >
-          استكشف العطور
+          استكشفي العطور
         </Link>
       </div>
     );
@@ -29,30 +30,32 @@ export default function WishlistPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
-      <h1 className="text-2xl font-black">المفضلة</h1>
+      <h1 className="font-display-ar text-2xl font-bold md:text-3xl">المفضلة</h1>
       <div className="mt-5 space-y-3">
         {wishlist.map((item) => (
           <div
             key={item.slug}
-            className="flex items-center gap-3 rounded-3xl border border-brand-100 bg-white p-3 shadow-card"
+            className="flex items-center gap-3.5 rounded-2xl border border-ink/8 bg-white p-3.5 shadow-card"
           >
             <Link href={`/product/${item.slug}`} className="shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={item.image_url || "/products/placeholder.svg"}
                 alt={item.name}
-                className="h-20 w-20 rounded-2xl object-cover"
+                className="h-20 w-20 rounded-xl object-cover ring-1 ring-black/5"
               />
             </Link>
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-bold text-brand-500">{item.brand}</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-700">
+                {item.brand}
+              </p>
               <Link
                 href={`/product/${item.slug}`}
-                className="line-clamp-1 text-sm font-extrabold hover:text-brand-700"
+                className="line-clamp-1 text-sm font-bold transition hover:text-plum"
               >
                 {item.name}
               </Link>
-              <p className="mt-0.5 text-base font-extrabold text-ink">
+              <p className="mt-1 text-[17px] font-extrabold text-ink">
                 {formatPrice(item.price)}
               </p>
             </div>
@@ -80,9 +83,9 @@ export default function WishlistPage() {
                     1
                   )
                 }
-                className="rounded-full bg-brand-600 px-4 py-2 text-xs font-extrabold text-white transition hover:bg-brand-700"
+                className="rounded-full bg-ink px-4 py-2 text-xs font-bold text-white transition hover:bg-plum"
               >
-                أضف للسلة
+                أضيفي للسلة
               </button>
               <button
                 onClick={() =>
@@ -104,7 +107,7 @@ export default function WishlistPage() {
                     featured: false,
                   })
                 }
-                className="rounded-full border border-brand-100 px-4 py-2 text-xs font-bold text-ink-faint transition hover:border-rose-200 hover:text-rose-500"
+                className="rounded-full border border-ink/10 px-4 py-2 text-xs font-bold text-ink-faint transition hover:border-rose-200 hover:text-rose-600"
               >
                 إزالة
               </button>

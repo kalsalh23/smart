@@ -1,48 +1,38 @@
 import Link from "next/link";
 import { getProducts } from "@/lib/products";
-import { CATEGORIES } from "@/lib/types";
+import { CATEGORIES, STORE } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
-import { STORE } from "@/lib/types";
+import SectionHead from "@/components/SectionHead";
+import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
 const BRANDS = [
-  "YSL", "Chanel", "D&G", "Dior", "Givenchy", "Paco Rabanne", "Narciso",
-  "Roberto Cavalli", "Jean Paul", "Elie Saab", "Versace", "Lancôme",
+  "YSL", "CHANEL", "D&G", "DIOR", "GIVENCHY", "PACO RABANNE", "NARCISO",
+  "ROBERTO CAVALLI", "JEAN PAUL", "ELIE SAAB", "VERSACE", "LANCÔME",
 ];
 
-function CategoryIcon({ cat }: { cat: string }) {
-  const common = "h-7 w-7";
+function CategoryIcon({ cat, className = "h-6 w-6" }: { cat: string; className?: string }) {
   switch (cat) {
     case "women":
-      return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={common}>
-          <path d="M9 4.5 12 7l3-2.5 4 4-2 2.5v8.5a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V11L5 8.5z" />
-        </svg>
-      );
+      return <Icon name="dress" className={className} />;
     case "men":
-      return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={common}>
-          <circle cx="10" cy="8" r="3" />
-          <path d="M6.5 13.5 10 12l3.5 1.5L15 19H5z" />
-          <path d="m15 9 5-5m0 0h-3.5M20 4v3.5" />
-        </svg>
-      );
+      return <Icon name="suit" className={className} />;
     case "unisex":
-      return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={common}>
-          <rect x="9" y="8" width="6" height="11" rx="1.5" />
-          <path d="M10.5 8V5.5h3V8M9.5 4h5" />
-        </svg>
-      );
+      return <Icon name="bottle" className={className} />;
     default:
-      return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={common}>
-          <rect x="4" y="9" width="16" height="11" rx="1.5" />
-          <path d="M12 9v11M4 9h16M12 9s-1.5-5-4.5-5a2.5 2.5 0 0 0 0 5M12 9s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5" />
-        </svg>
-      );
+      return <Icon name="gift" className={className} />;
   }
+}
+
+function OrnamentDivider() {
+  return (
+    <div className="mt-16 flex items-center justify-center gap-3">
+      <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold-500/50" />
+      <Icon name="sparkle" className="h-4 w-4 text-gold-500" strokeWidth={1.4} />
+      <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold-500/50" />
+    </div>
+  );
 }
 
 export default async function HomePage() {
@@ -52,99 +42,107 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4">
-      {/* Hero */}
-      <section className="mt-4 overflow-hidden rounded-4xl bg-gradient-to-l from-brand-100 via-[#F2EAFB] to-blush p-6 shadow-soft md:p-10">
-        <div className="grid items-center gap-6 md:grid-cols-2">
-          <div className="order-2 md:order-1">
-            <span className="inline-block rounded-full bg-brand-600 px-3 py-1 text-[11px] font-bold text-white">
-              وصل حديثاً
-            </span>
-            <h1 className="mt-3 text-3xl font-black leading-tight text-ink md:text-5xl">
-              عطور أصلية
+      {/* Hero — editorial */}
+      <section className="mt-5 overflow-hidden rounded-4xl border border-ink/8 bg-white shadow-soft">
+        <div className="grid items-stretch md:grid-cols-2">
+          <div className="order-2 flex flex-col justify-center p-7 md:order-1 md:p-12">
+            <p className="eyebrow">VIOLET — DAMASCUS</p>
+            <h1 className="mt-3 font-display-ar text-[34px] font-bold leading-[1.25] text-ink md:text-[44px]">
+              عطورٌ أصلية
               <br />
-              <span className="text-brand-600">لكل مزاج ومناسبة</span>
+              <span className="text-brand-700">لكلّ مزاجٍ ومناسبة</span>
             </h1>
-            <p className="mt-3 max-w-md text-sm leading-7 text-ink-soft md:text-base">
-              من أشهر الماركات العالمية: YSL، شانيل، دولتشي آند غابانا، جيفنشي
-              وأكثر — مضمونة أورجيال 100٪.
+            <div className="mt-4 h-px w-24 bg-gradient-to-l from-gold-500 to-gold-500/0" />
+            <p className="mt-4 max-w-md text-sm leading-8 text-ink-soft md:text-[15px]">
+              من أشهر الماركات العالمية — YSL، شانيل، دولتشي آند غابانا،
+              جيفنشي وأكثر. مضمونة أورجيال 100٪ مع تغليف هدايا فاخر.
             </p>
-            <Link
-              href="/explore"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-brand-700"
-            >
-              تسوّق الآن
-              <span aria-hidden>←</span>
-            </Link>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link
+                href="/explore"
+                className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3.5 text-[13px] font-bold text-white transition hover:bg-plum"
+              >
+                تسوّق التشكيلة
+                <Icon name="arrowStart" className="h-4 w-4" />
+              </Link>
+              <a
+                href={`https://wa.me/${STORE.phoneIntl}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-6 py-3 text-[13px] font-bold text-ink transition hover:border-plum hover:text-plum"
+              >
+                <Icon name="whatsapp" className="h-4 w-4 text-[#1FA855]" />
+                اطلبي عبر واتساب
+              </a>
+            </div>
           </div>
-          <div className="order-1 md:order-2">
-            <div className="relative mx-auto max-w-md">
-              <div className="absolute -inset-3 rounded-4xl bg-white/50" />
+
+          <div className="order-1 relative md:order-2">
+            <div className="relative h-full min-h-[260px] p-4 md:p-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/hero.jpg"
-                alt="متجر فيوليت للعطور"
-                className="relative aspect-[4/3] w-full rounded-4xl object-cover shadow-soft"
+                alt="متجر فيوليت للعطور — دمشق"
+                className="h-full w-full rounded-3xl object-cover"
               />
+              {/* authenticity seal */}
+              <div className="absolute bottom-6 right-6 flex h-20 w-20 flex-col items-center justify-center rounded-full border border-gold-400 bg-white/95 text-center shadow-soft md:h-24 md:w-24">
+                <Icon name="shield" className="h-5 w-5 text-gold-600" strokeWidth={1.4} />
+                <span className="mt-1 text-[10px] font-extrabold leading-tight text-ink">
+                  أصلي
+                  <br />
+                  100٪
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* USP strip */}
-      <section className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <section className="mt-5 grid grid-cols-1 divide-y divide-ink/6 overflow-hidden rounded-3xl border border-ink/8 bg-white shadow-card sm:grid-cols-3 sm:divide-y-0 sm:divide-x sm:divide-x-reverse">
         {[
-          { icon: "✅", title: "أورجيال 100٪", sub: "ضمان الاستبدال" },
-          { icon: "🚚", title: "توصيل سريع", sub: "دمشق والريف" },
-          { icon: "💵", title: "الدفع عند الاستلام", sub: "خالية من المخاطر" },
+          { icon: "shield", title: "أورجيال 100٪", sub: "ضمان الأصالة والاستبدال" },
+          { icon: "truck", title: "توصيل سريع", sub: "داخل دمشق وريفها" },
+          { icon: "cash", title: "الدفع عند الاستلام", sub: "تجربة شراء مريحة" },
         ].map((u) => (
-          <div
-            key={u.title}
-            className="flex items-center gap-3 rounded-3xl border border-brand-100 bg-white px-4 py-3.5 shadow-card"
-          >
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-50 text-xl">
-              {u.icon}
+          <div key={u.title} className="flex items-center gap-3.5 px-5 py-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold-400/70 text-gold-700">
+              <Icon name={u.icon as "shield"} className="h-5 w-5" strokeWidth={1.4} />
             </span>
             <div>
-              <p className="text-sm font-extrabold">{u.title}</p>
-              <p className="text-xs text-ink-faint">{u.sub}</p>
+              <p className="text-[13px] font-extrabold text-ink">{u.title}</p>
+              <p className="mt-0.5 text-[11px] text-ink-faint">{u.sub}</p>
             </div>
           </div>
         ))}
       </section>
 
       {/* Categories */}
-      <section className="mt-10">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-extrabold">الأقسام</h2>
-          <Link href="/explore" className="text-sm font-bold text-brand-600">
-            عرض الكل
-          </Link>
-        </div>
-        <div className="grid grid-cols-4 gap-3">
+      <section className="mt-14">
+        <SectionHead eyebrow="COLLECTIONS" title="تسوّقي حسب القسم" linkHref="/explore" />
+        <div className="grid grid-cols-4 gap-3 md:gap-4">
           {CATEGORIES.map((c) => (
             <Link
               key={c.key}
               href={`/explore?cat=${c.key}`}
-              className="group flex flex-col items-center gap-2 rounded-3xl border border-brand-100 bg-white py-4 shadow-card transition hover:-translate-y-0.5 hover:border-brand-300"
+              className="group flex flex-col items-center gap-2.5 rounded-2xl border border-ink/8 bg-white py-5 shadow-card transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
             >
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-100 text-brand-700 transition group-hover:bg-brand-600 group-hover:text-white">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-brand-700 transition group-hover:bg-plum group-hover:text-white">
                 <CategoryIcon cat={c.key} />
               </span>
-              <span className="text-xs font-bold md:text-sm">{c.label}</span>
+              <span className="text-[11px] font-bold text-ink md:text-[13px]">
+                {c.label}
+              </span>
             </Link>
           ))}
         </div>
       </section>
 
       {/* Best sellers */}
-      <section className="mt-10">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-extrabold">الأكثر مبيعاً</h2>
-          <Link href="/explore" className="text-sm font-bold text-brand-600">
-            عرض الكل
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-5">
+      <section className="mt-14">
+        <SectionHead eyebrow="BEST SELLERS" title="الأكثر مبيعاً" linkHref="/explore" />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4">
           {bestSellers.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}
@@ -152,12 +150,12 @@ export default async function HomePage() {
       </section>
 
       {/* Brands marquee */}
-      <section className="mt-10 overflow-hidden rounded-3xl border border-brand-100 bg-white py-4 shadow-card">
-        <div className="flex w-max animate-marquee gap-8 whitespace-nowrap px-4">
+      <section className="mt-14 overflow-hidden rounded-2xl border border-ink/8 bg-white py-5 shadow-card">
+        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap px-5">
           {[...BRANDS, ...BRANDS].map((b, i) => (
             <span
               key={i}
-              className="font-display text-lg font-semibold tracking-[0.2em] text-brand-800/70"
+              className="font-display text-base font-medium tracking-[0.3em] text-ink/45"
             >
               {b}
             </span>
@@ -165,15 +163,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <OrnamentDivider />
+
       {/* New arrivals */}
       <section className="mt-10">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-extrabold">وصل حديثاً</h2>
-          <Link href="/explore" className="text-sm font-bold text-brand-600">
-            عرض الكل
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-5">
+        <SectionHead eyebrow="NEW ARRIVALS" title="وصل حديثاً" linkHref="/explore" />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4">
           {newList.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}
@@ -181,71 +176,89 @@ export default async function HomePage() {
       </section>
 
       {/* About / store */}
-      <section className="mt-12 grid items-center gap-6 rounded-4xl border border-brand-100 bg-white p-6 shadow-soft md:grid-cols-2 md:p-10">
+      <section className="mt-16 grid items-center gap-8 overflow-hidden rounded-4xl border border-ink/8 bg-white p-6 shadow-soft md:grid-cols-2 md:p-10">
         <div className="grid grid-cols-2 gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/store-1.jpg"
-            alt="أرفف العطور"
-            className="col-span-2 h-44 w-full rounded-3xl object-cover md:h-56"
+            alt="أرفف العطور في المتجر"
+            className="col-span-2 h-44 w-full rounded-2xl object-cover md:h-60"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/store-2.jpg"
-            alt="أرفف العطور"
-            className="h-32 w-full rounded-3xl object-cover md:h-40"
+            alt="عطور ماركات عالمية"
+            className="h-32 w-full rounded-2xl object-cover md:h-44"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/brand/logo.jpg"
             alt="شعار فيوليت"
-            className="h-32 w-full rounded-3xl object-cover md:h-40"
+            className="h-32 w-full rounded-2xl object-cover md:h-44"
           />
         </div>
         <div>
-          <p className="font-display text-3xl font-bold tracking-[0.3em] text-brand-700">
-            VIOLET
-          </p>
-          <h2 className="mt-2 text-2xl font-extrabold leading-snug">
-            تجربة تسوّق فاخرة في قلب دمشق
+          <p className="eyebrow">OUR STORE</p>
+          <h2 className="mt-2 font-display-ar text-[28px] font-bold leading-snug text-ink md:text-4xl">
+            تجربة تسوّقٍ فاخرة
+            <br />
+            في قلب دمشق
           </h2>
-          <p className="mt-3 text-sm leading-7 text-ink-soft">
+          <div className="mt-4 h-px w-24 bg-gradient-to-l from-gold-500 to-gold-500/0" />
+          <p className="mt-4 text-sm leading-8 text-ink-soft">
             {STORE.tagline} — نوصل في دمشق وريفها لكافة التجارات، ونتشرف بثقتكم
             وخدمتكم دائماً.
           </p>
-          <ul className="mt-4 space-y-2.5 text-sm font-semibold text-ink-soft">
-            <li>📍 {STORE.address}</li>
-            <li dir="ltr" className="text-start">
-              📞 {STORE.phone}
+          <ul className="mt-6 space-y-3.5 text-[13px] font-semibold text-ink-soft">
+            <li className="flex items-center gap-3">
+              <Icon name="pin" className="h-[18px] w-[18px] shrink-0 text-gold-600" />
+              {STORE.address}
+            </li>
+            <li className="flex items-center gap-3" dir="ltr">
+              <Icon name="phone" className="h-[18px] w-[18px] shrink-0 text-gold-600" />
+              <span className="font-display text-base tracking-wider">{STORE.phone}</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <Icon name="clock" className="h-[18px] w-[18px] shrink-0 text-gold-600" />
+              يومياً من 10 صباحاً حتى 10 مساءً
             </li>
           </ul>
           <a
             href={STORE.instagram}
             target="_blank"
             rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-l from-[#F58529] via-[#DD2A7B] to-[#8134AF] px-5 py-2.5 text-sm font-bold text-white shadow-soft transition hover:opacity-90"
+            className="mt-7 inline-flex items-center gap-2.5 rounded-full bg-ink px-6 py-3 text-[13px] font-bold text-white transition hover:bg-plum"
           >
-            تابعنا على إنستغرام
+            <Icon name="instagram" className="h-4 w-4" />
+            تابعينا على إنستغرام
           </a>
         </div>
       </section>
 
       {/* WhatsApp CTA */}
-      <section className="mt-10 overflow-hidden rounded-4xl bg-gradient-to-l from-brand-700 to-brand-500 p-8 text-center text-white shadow-soft md:p-12">
-        <h2 className="text-2xl font-black md:text-3xl">
-          محتاج مساعدة باختيار عطرك؟
+      <section
+        className="mt-14 overflow-hidden rounded-4xl bg-ink p-9 text-center shadow-soft md:p-14"
+        style={{
+          backgroundImage:
+            "radial-gradient(600px 220px at 50% 0%, rgba(123,63,190,.28), transparent 70%)",
+        }}
+      >
+        <p className="eyebrow !text-gold-400">PERSONAL SERVICE</p>
+        <h2 className="mx-auto mt-3 max-w-xl font-display-ar text-[28px] font-bold leading-snug text-white md:text-4xl">
+          محتاجة مساعدة باختيار عطرك؟
         </h2>
-        <p className="mx-auto mt-2 max-w-lg text-sm leading-7 text-white/85">
-          فريقنا جاهز يساعدك تختار العطر المناسب لك أو هدية مميزة — تواصل معنا
-          الآن على واتساب.
+        <p className="mx-auto mt-3 max-w-lg text-sm leading-8 text-white/65">
+          فريقنا جاهز يساعدك تختاري العطر المناسب لك أو هدية مميزة — تواصلي معنا
+          الآن على واتساب وسنرشدك بخبرة.
         </p>
         <a
           href={`https://wa.me/${STORE.phoneIntl}`}
           target="_blank"
           rel="noreferrer"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-extrabold text-brand-700 shadow-soft transition hover:bg-brand-50"
+          className="mt-7 inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-3.5 text-[13px] font-extrabold text-ink shadow-soft transition hover:bg-gold-300 hover:text-ink"
         >
-          تواصل عبر واتساب
+          <Icon name="whatsapp" className="h-[18px] w-[18px] text-[#1FA855]" />
+          تواصلي عبر واتساب
         </a>
       </section>
     </div>

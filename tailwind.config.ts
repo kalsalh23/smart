@@ -19,23 +19,30 @@ const config: Config = {
           950: "#2B1144",
         },
         ink: {
-          DEFAULT: "#241C38",
-          soft: "#5B5470",
-          faint: "#8F88A3",
+          DEFAULT: "#201833",
+          soft: "#57506B",
+          faint: "#8B84A0",
         },
-        blush: "#FDF0F5",
-        gold: "#C9A227",
+        gold: {
+          300: "#E7D29A",
+          400: "#D9BC6E",
+          500: "#C9A227",
+          600: "#A8861C",
+          700: "#7C6411",
+        },
+        plum: "#3B1B5E",
       },
       fontFamily: {
         sans: ["var(--font-cairo)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "serif"],
+        "display-ar": ["var(--font-amiri)", "var(--font-display)", "serif"],
       },
       boxShadow: {
-        soft: "0 10px 30px -12px rgba(75, 38, 133, 0.18)",
-        card: "0 6px 20px -8px rgba(75, 38, 133, 0.14)",
+        soft: "0 12px 32px -14px rgba(52, 24, 96, 0.22)",
+        card: "0 1px 2px rgba(32, 24, 51, 0.05), 0 8px 24px -12px rgba(52, 24, 96, 0.14)",
       },
       borderRadius: {
-        "4xl": "2rem",
+        "4xl": "1.75rem",
       },
       keyframes: {
         marquee: {
@@ -48,7 +55,7 @@ const config: Config = {
         },
       },
       animation: {
-        marquee: "marquee 22s linear infinite",
+        marquee: "marquee 26s linear infinite",
         fadeUp: "fadeUp .45s ease both",
       },
     },

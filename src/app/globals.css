@@ -10,6 +10,9 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .eyebrow {
+    @apply font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-gold-700;
+  }
 }
 
 html {
@@ -17,9 +20,9 @@ html {
 }
 
 body {
-  @apply bg-[#F6F2FC] text-ink antialiased;
+  @apply bg-[#F8F5FD] text-ink antialiased;
 }
 
 ::selection {
-  @apply bg-brand-600 text-white;
+  @apply bg-plum text-white;
 }

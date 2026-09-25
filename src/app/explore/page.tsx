@@ -13,8 +13,9 @@ export default async function ExplorePage({
   const products = await getProducts();
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
-      <h1 className="mb-5 text-2xl font-black md:text-3xl">
-        تسوّق <span className="text-brand-600">العطور الأصلية</span>
+      <p className="eyebrow">SHOP ALL</p>
+      <h1 className="mt-1.5 font-display-ar text-[26px] font-bold md:text-3xl">
+        تسوّق <span className="text-brand-700">العطور الأصلية</span>
       </h1>
       <ExploreClient
         products={products}
